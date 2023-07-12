@@ -1,6 +1,5 @@
 from dependecias import *
 
-
 def create_gradient(canvas, width, height, color1, color2):
     # Crear un gradiente lineal vertical en el lienzo
     for y in range(height):
@@ -14,9 +13,9 @@ def configure_canvas(event, canvas):
     # Configurar el tamaño del lienzo según las dimensiones de la ventana
     canvas.config(width=event.width, height=event.height)
 
+
 def main():
     
-
     root = tk.Tk() 
     
     #Icono
@@ -45,7 +44,6 @@ def main():
     # Crear el gradiente en el lienzo
     create_gradient(canvas, root.winfo_width(), root.winfo_height(), color1, color2)
 
-
     # insertamos la barra de menu
     barra_menu(root)
     
@@ -61,5 +59,3 @@ def main():
 
 if __name__ =='__main__':
     main()
-
-

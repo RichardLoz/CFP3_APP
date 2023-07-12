@@ -1,7 +1,8 @@
 import tkinter as tk
-from componentes.ventana_curso import VentanaCurso
 from componentes.ventana_profesor import VentanaProfesor
-from componentes.calculadora import Calculadora
+from componentes.ventana_cursos import VentanaCurso2
+from componentes.calculadora_xavi import Calculadora
+from componentes.ventana_feriados import VentanaFeriados
 
 # clase
 class Frame(tk.Frame):
@@ -31,7 +32,7 @@ class Frame(tk.Frame):
         self.btn_carga_feriados.grid(row=1, column=1, padx=padding_x, pady=padding_y)
     
     def abrir_cursos(self):
-        ventana = VentanaCurso(self)
+        ventana = VentanaCurso2(self)
     
     def abrir_profesores(self):
         ventana = VentanaProfesor(self)
@@ -40,4 +41,4 @@ class Frame(tk.Frame):
         ventana = Calculadora(self)
     
     def abrir_carga_feriados(self):
-        pass
+        ventana = VentanaFeriados(self)
