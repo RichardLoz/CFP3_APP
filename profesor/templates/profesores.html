@@ -1,0 +1,149 @@
+{% extends 'index.html' %}
+{% block title %}
+ACHYC - ABM Profesores
+{% endblock%}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="col-12 m-3">
+        <div class="row">
+            <div class="col-10">
+                <h1>Profesores</h1>
+            </div>
+            <div class="col-2 mt-3">
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal">Crear Profesor</button>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped text-center">
+        <thead>
+            <tr>
+                <td class="bg-primary text-white">#</td>
+                <td class="bg-primary text-white">Nombre</td>
+                <td class="bg-primary text-white">Apellido</td>
+                <td class="bg-primary text-white">Edad</td>
+                <td class="bg-primary text-white">DNI</td>
+                <td class="bg-primary text-white">Turno</td>
+                <td class="bg-primary text-white">Disponibilidad</td>
+                <td class="bg-primary text-white">Posicion</td>
+                <td class="bg-primary text-white">Acciones</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for profesor in profesores%}
+            <tr>
+                <td>{{profesor.id}}</td>
+                <td>{{profesor.nombre}}</td>
+                <td>{{profesor.apellido}}</td>
+                <td>{{profesor.edad}}</td>
+                <td>{{profesor.dni}}</td>
+                <td>{{profesor.turno}}</td>
+                <td>{{profesor.disponibilidad}}</td>
+                <td>{{profesor.posicion}}</td>
+                <td>
+                  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateModal{{profesor.id}}">Editar</button>
+                  <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{profesor.id}}">Eliminar</button>
+                </td>
+             </tr>
+
+             <!-- Update Modal -->
+             <div class="modal fade" id="updateModal{{profesor.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header bg-success">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modificacion de Profesor</h1>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{% url 'update_profesor' profesor.id %}" method="POST">
+                      {% csrf_token %}
+                      <label for="nombre">Nombre</label>
+                      <input type="text" name="nombre" class="form-control mb-2" value="{{profesor.nombre}}"  required>
+                      <label for="apellido">Apellido</label>
+                      <input type="text" name="apellido" class="form-control mb-2" value="{{profesor.apellido}}"  required>
+                      <label for="edad">Edad</label>
+                      <input type="number" name="edad" class="form-control mb-2" value="{{profesor.edad}}"  required>
+                      <label for="dni">DNI</label>
+                      <input type="number" name="dni" class="form-control mb-2" value="{{profesor.dni}}"  required>
+                      <label for="turno">Turno</label>
+                      <input type="text" name="turno" class="form-control mb-2" value="{{profesor.turno}}"  required>
+                      <label for="disponibilidad">Disponibilidad</label>
+                      <input type="text" name="disponibilidad" class="form-control mb-2" value="{{profesor.disponibilidad}}" required>
+                      <label for="posicion">Puesto</label>
+                      <select name="posicion_id" class="form-control mb-2" required>
+                        <option value="{{profesor.posicion.id}}">{{profesor.posicion.name}}</option>
+                        {% for posicion in posiciones %}
+                          <option value="{{posicion.id}}">{{posicion.nombre}}</option>
+                        {%endfor%}
+                      </select> 
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success">Actualizar</button>
+                  </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+                <!-- Delete Modal -->
+                <div class="modal fade" id="deleteModal{{profesor.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header bg-danger">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Profesor</h1>
+                    </div>
+                    <div class="modal-body">
+                      <p>Se va a eliminar el registro: ({{profesor.id}}) {{profesor}}</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                      <a href="{% url 'delete_profesor' profesor.id %}" class="btn btn-danger">Eliminar</a>
+                     </div>
+                  </div>
+                </div>
+              </div>
+            {%endfor%}
+        </tbody>
+    </table>
+</div>
+
+<!-- Create Modal -->
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Alta Nuevo Profesor</h1>
+        </div>
+        <div class="modal-body">
+          <form action="{%url 'store_profesor'%}" method="POST">
+            {% csrf_token %}
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" class="form-control mb-2" placeholder="Ingrese el nombre..." required>
+            <label for="apellido">Apellido</label>
+            <input type="text" name="apellido" class="form-control mb-2" placeholder="Ingrese el apellido..." required>
+            <label for="edad">Edad</label>
+            <input type="number" name="edad" class="form-control mb-2" placeholder="Ingrese la edad..." required>
+            <label for="dni">DNI</label>
+            <input type="number" name="dni" class="form-control mb-2" placeholder="Ingrese el DNI..." required>
+            <label for="turno">Turno</label>
+            <input type="text" name="turno" class="form-control mb-2" placeholder="Ingrese el turno..." required>
+            <label for="disponibilidad">Disponibilidad</label>
+            <input type="text" name="disponibilidad" class="form-control mb-2" placeholder="Ingrese la disponibilidad..." required>
+            <label for="posicion">Puesto</label>
+            <select name="posicion_id" class="form-control mb-2" required>
+              <option value="">Seleccione un cargo... </option>
+              {% for posicion in posiciones %}
+                <option value="{{posicion.id}}">{{posicion.nombre}}</option>
+              {%endfor%}
+            </select> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-info">Crear</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock%}
+
