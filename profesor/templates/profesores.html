@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+{% extends 'base.html' %}
 {% block title %}
 ACHYC - ABM Profesores
 {% endblock%}
@@ -65,7 +65,13 @@ ACHYC - ABM Profesores
                       <label for="dni">DNI</label>
                       <input type="number" name="dni" class="form-control mb-2" value="{{profesor.dni}}"  required>
                       <label for="turno">Turno</label>
-                      <input type="text" name="turno" class="form-control mb-2" value="{{profesor.turno}}"  required>
+                      {% comment %} <input type="text" name="turno" class="form-control mb-2" value="{{profesor.turno}}"  required>
+                      <label for="turno">Turno</label> {% endcomment %}
+                      <select name="turno" class="form-control mb-2" required>
+                          <option value="Mañana">Mañana</option>
+                          <option value="Tarde">Tarde</option>
+                          <option value="Noche">Noche</option>
+                      </select>
                       <label for="disponibilidad">Disponibilidad</label>
                       <input type="text" name="disponibilidad" class="form-control mb-2" value="{{profesor.disponibilidad}}" required>
                       <label for="posicion">Puesto</label>
@@ -125,8 +131,12 @@ ACHYC - ABM Profesores
             <input type="number" name="edad" class="form-control mb-2" placeholder="Ingrese la edad..." required>
             <label for="dni">DNI</label>
             <input type="number" name="dni" class="form-control mb-2" placeholder="Ingrese el DNI..." required>
-            <label for="turno">Turno</label>
-            <input type="text" name="turno" class="form-control mb-2" placeholder="Ingrese el turno..." required>
+            <select name="turno" class="form-control mb-2" required>
+              <option value="" disabled selected hidden>Selecciona un turno</option>
+              <option value="Mañana">Mañana</option>
+              <option value="Tarde">Tarde</option>
+              <option value="Noche">Noche</option>
+            </select>
             <label for="disponibilidad">Disponibilidad</label>
             <input type="text" name="disponibilidad" class="form-control mb-2" placeholder="Ingrese la disponibilidad..." required>
             <label for="posicion">Puesto</label>
